@@ -976,7 +976,6 @@ Update 2
 * Add experts
 * Redirect discussions to discuss.python.org
 
-
 References
 ==========
 
