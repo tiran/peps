@@ -167,12 +167,10 @@ audio processing.
    :header: "Module", "Deprecated in", "To be removed", "Added in", "Has maintainer?", "Replacement"
    :widths: 2, 1, 1, 1, 1, 2
 
-    aifc,3.8 (3.0\*),3.10,1993,**yes (inactive)**,\-
     asynchat,**3.6** (3.0\*),3.10,1999,**yes**,asyncio
     asyncore,**3.6** (3.0\*),3.10,1999,**yes**,asyncio
     audioop,3.8 (3.0\*),3.10,1992,**yes**,\-
     binhex,3.8,3.10,1995,no,\-
-    cgi,3.8 (2.0\*\*),3.10,1995,no,\-
     cgitb,3.8 (2.0\*\*),3.10,1995,no,\-
     chunk,3.8,3.10,1999,no,\-
     crypt,3.8,3.10,1994,**yes (inactive)**,"legacycrypt, bcrypt, argon2cffi, hashlib, passlib"
@@ -185,7 +183,6 @@ audio processing.
     imp,**3.4**,3.10,1990/1995,no,importlib
     macpath,**3.7**,**3.8**,1990,n/a,\-
     msilib,3.8,3.10,2006,no,\-
-    nntplib,3.8,3.10,1992,no,\-
     nis,3.8 (3.0\*),3.10,1992,no,\-
     ossaudiodev,3.8,3.10,2002,no,\-
     parser,**2.5**,**3.9**,1993,**yes**,"ast, lib2to3.pgen2"
@@ -194,7 +191,6 @@ audio processing.
     sndhdr,3.8,3.10,1994,no,"filetype, puremagic, python-magic"
     spwd,3.8,3.10,2005,no,"python-pam, simplepam"
     sunau,3.8 (3.0\*),3.10,1993,no,\-
-    telnetlib,3.8 (3.0\*),3.10,1997,no,"telnetlib3, Exscript"
     uu,3.8,3.10,1994,no,\-
     xdrlib,3.8,3.10,1992/1996,no,\-
 
@@ -268,33 +264,6 @@ Substitute
 
 Multimedia modules
 ------------------
-
-aifc
-~~~~
-
-The `aifc <https://docs.python.org/3/library/aifc.html>`_ module provides
-support for reading and writing AIFF and AIFF-C files. The Audio Interchange
-File Format is an old audio format from 1988 based on Amiga IFF. It was most
-commonly used on the Apple Macintosh. These days only few specialized
-application use AIFF.
-
-A user disclosed [8]_ that the post production film industry makes heavy
-use of the AIFC file format. The usage of the ``aifc`` module in closed source
-and internal software was unknown prior to the first posting of this PEP. This
-may be a compelling argument to keep the ``aifc`` module in the standard
-library. The file format is stable and the module does not require much
-maintenance. The strategic benefits for Python may outmatch the burden.
-
-Module type
-  pure Python (depends on some functions from `audioop`_ C extension)
-Deprecated in
-  3.8
-To be removed in
-  3.10
-Has a designated expert
-   yes, but expert is currently inactive.
-Substitute
-  **none**
 
 audioop
 ~~~~~~~
@@ -478,36 +447,6 @@ Substitute
   asyncio
 
 
-cgi
-~~~
-
-The `cgi <https://docs.python.org/3/library/cgi.html>`_ module is a support
-module for Common Gateway Interface (CGI) scripts. CGI is deemed as
-inefficient because every incoming request is handled in a new process.
-:pep:`206` considers the module as:
-
-   "[...] designed poorly and are now near-impossible to fix (``cgi``) [...]"
-
-Several people proposed to either keep the ``cgi`` module for features like
-``cgi.parse_qs`` or move ``cgi.escape`` to a different module. The
-functions ``cgi.parse_qs`` and ``cgi.parse_qsl`` have been
-deprecated for a while and are actually aliases for
-``urllib.parse.parse_qs`` and ``urllib.parse.parse_qsl``. The
-function ``cgi.quote`` has been deprecated in favor of ``html.quote``
-with secure default values.
-
-Module type
-  pure Python
-Deprecated in
-  3.8 (originally proposed for 2.0 by :pep:`206`)
-To be removed in
-  3.10
-Has a designated expert
-   no
-Substitute
-  **none**
-
-
 cgitb
 ~~~~~
 
@@ -611,23 +550,6 @@ Has a designated expert
 Substitute
   **none**
 
-telnetlib
-~~~~~~~~~
-
-The `telnetlib <https://docs.python.org/3/library/telnetlib.html>`_ module
-provides a Telnet class that implements the Telnet protocol.
-
-Module type
-  pure Python
-Deprecated in
-  3.8
-To be removed in
-  3.10
-Substitute
-  `telnetlib3 <https://pypi.org/project/telnetlib3>`_,
-  `Exscript <https://pypi.org/project/Exscript/>`_
-
-
 Operating system interface
 --------------------------
 
@@ -645,7 +567,7 @@ quality and insecure. Users are discouraged to use them.
   limited key space of 2**56.
 * MD5, salted SHA256, salted SHA512, and Blowfish are optional extensions.
   SSHA256 and SSHA512 are glibc extensions. Blowfish (bcrypt) is the only
-  algorithm that is still secure. However it's in glibc and therefore not
+  algorithm that is still secure. However it is not in glibc and therefore not
   commonly available on Linux.
 * Depending on the platform, the ``crypt`` module is not thread safe. Only
   implementations with ``crypt_r(3)`` are thread safe.
@@ -885,12 +807,61 @@ Some modules were originally proposed for deprecation.
    :header: "Module", "Deprecated in", "Replacement"
    :widths: 1, 1, 2
 
+    aifc,\-,
+    cgi,\-,
     colorsys,\-,"colormath, colour, colorspacious, Pillow"
     fileinput,\-,argparse
     getopt,\-,"argparse, optparse"
     lib2to3,\-,
+    nntplib,\-,
     optparse,**3.2**,argparse
+    telnetlib,\-,"telnetlib3, Exscript"
     wave,\-,
+
+
+aifc
+----
+
+The `aifc <https://docs.python.org/3/library/aifc.html>`_ module provides
+support for reading and writing AIFF and AIFF-C files. The Audio Interchange
+File Format is an old audio format from 1988 based on Amiga IFF. It was most
+commonly used on the Apple Macintosh. These days only few specialized
+application use AIFF.
+
+A user disclosed [8]_ that the post production film industry makes heavy
+use of the AIFC file format. The usage of the ``aifc`` module in closed source
+and internal software was unknown prior to the first posting of this PEP. This
+may be a compelling argument to keep the ``aifc`` module in the standard
+library. The file format is stable and the module does not require much
+maintenance. The strategic benefits for Python may outmatch the burden.
+
+The module depends on functions from the `audioop`_ C extension that
+convert from and to ADPCM (``adpcm2lin``, ``lin2adpcm``), a-LAW (``alaw2lin``,
+``lin2alaw``), and u-LAW (``ulaw2lin``, ``lin2ulaw``) encoding. TODO
+
+Module type
+  pure Python (depends on some functions from `audioop`_ C extension)
+
+cgi
+---
+
+The `cgi <https://docs.python.org/3/library/cgi.html>`_ module is a support
+module for Common Gateway Interface (CGI) scripts. CGI is deemed as
+inefficient because every incoming request is handled in a new process.
+:pep:`206` considers the module as:
+
+   "[...] designed poorly and are now near-impossible to fix (``cgi``) [...]"
+
+Several people proposed to either keep the ``cgi`` module for features like
+``cgi.parse_qs`` or move ``cgi.escape`` to a different module. The
+functions ``cgi.parse_qs`` and ``cgi.parse_qsl`` have been
+deprecated for a while and are actually aliases for
+``urllib.parse.parse_qs`` and ``urllib.parse.parse_qsl``. The
+function ``cgi.quote`` has been deprecated in favor of ``html.quote``
+with secure default values.
+
+Module type
+  pure Python
 
 colorsys
 --------
@@ -983,6 +954,22 @@ Has a designated expert
 Substitute
   argparse
 
+telnetlib
+~~~~~~~~~
+
+The `telnetlib <https://docs.python.org/3/library/telnetlib.html>`_ module
+provides a Telnet class that implements the Telnet protocol.
+
+Module type
+  pure Python
+Deprecated in
+  3.8
+To be removed in
+  3.10
+Substitute
+  `telnetlib3 <https://pypi.org/project/telnetlib3>`_,
+  `Exscript <https://pypi.org/project/Exscript/>`_
+
 wave
 ----
 
@@ -1014,6 +1001,8 @@ core developer team. Therefore removed modules will not be maintained by
 the core team as separate PyPI packages. However the removed code, tests and
 documentation may be moved into a new Git repository, so community members
 have a place from which they can pick up and fork code.
+
+TODO remove
 
 A first draft of a `legacylib <https://github.com/tiran/legacylib>`_
 repository is available on my private GitHub account. The modules could be
@@ -1089,6 +1078,11 @@ Update 2
 * Add creation year to overview table
 * Mention :pep:`206` and :pep:`3108`
 * Update sections for ``aifc``, ``audioop``, ``cgi``, and ``wave``.
+
+Update 3
+--------
+
+* Keep `aifc`_, `cgi`_, `nntplib`_, and `telnetlib`_
 
 
 References
